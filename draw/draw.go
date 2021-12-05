@@ -24,7 +24,7 @@ func MakeCryptonoteBox(user *cryptonote.User) *tm.Box {
 
 	fmt.Fprintf(box, "cryptonote.social\n")
 	fmt.Fprintf(box, "Name: %s\n", user.Name)
-	fmt.Fprintf(box, "Hash: %d H/s\n", user.HashRate)
+	fmt.Fprintf(box, "Hash: %s/s\n", hashRounder(user.HashRate))
 	fmt.Fprintf(box, "Progress: %.4f%%\n", user.RewardProgress)
 	fmt.Fprintf(box, "Owed: %.6f XMR\n", user.Owed)
 	fmt.Fprintf(box, "Paid: %.6f XMR\n", user.Paid)
@@ -36,8 +36,8 @@ func MakeTwominersBox(user *twominers.User) *tm.Box {
 	box := tm.NewBox(25|tm.PCT, 10, 0)
 
 	fmt.Fprintf(box, "2miners.com\n")
-	fmt.Fprintf(box, "Current Hash: %d H/s\n", user.HashRate)
-	fmt.Fprintf(box, "Average Hash: %d H/s\n", user.AvgHashRate)
+	fmt.Fprintf(box, "Current Hash: %s/s\n", hashRounder(user.HashRate))
+	fmt.Fprintf(box, "Average Hash: %s/s\n", hashRounder(user.AvgHashRate))
 	fmt.Fprintf(box, "Paid: %.6f NANO\n", user.Paid)
 	fmt.Fprintf(box, "Workers On: %d\n", user.WorkerOn)
 	fmt.Fprintf(box, "Shares Validated: %d\n", user.SharesValid)
@@ -45,16 +45,16 @@ func MakeTwominersBox(user *twominers.User) *tm.Box {
 	return box
 }
 
-func HashRounder(b int64) string {
+func hashRounder(hash int) string {
 	const unit = 1000
-	if b < unit {
-		return fmt.Sprintf("%d B", b)
+	if hash < unit {
+		return fmt.Sprintf("%d H", hash)
 	}
-	div, exp := int64(unit), 0
-	for n := b / unit; n >= unit; n /= unit {
+	div, exp := int(unit), 0
+	for n := hash / unit; n >= unit; n /= unit {
 		div *= unit
 		exp++
 	}
-	return fmt.Sprintf("%.1f %cB",
-		float64(b)/float64(div), "kMGTPE"[exp])
+	return fmt.Sprintf("%.1f %cH",
+		float64(hash)/float64(div), "KMGTPE"[exp])
 }

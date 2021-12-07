@@ -12,7 +12,7 @@ func DrawBoxes(boxes []*tm.Box) {
 	tm.Clear()
 
 	for i, box := range boxes {
-		tm.Print(tm.MoveTo(box.String(), i*30|tm.PCT, 5|tm.PCT))
+		tm.Print(tm.MoveTo(box.String(), i*60|tm.PCT, 5|tm.PCT))
 	}
 
 	tm.Println()
@@ -20,7 +20,7 @@ func DrawBoxes(boxes []*tm.Box) {
 }
 
 func MakeCryptonoteBox(user *cryptonote.User) *tm.Box {
-	box := tm.NewBox(25|tm.PCT, 10, 0)
+	box := tm.NewBox(40|tm.PCT, 10, 0)
 
 	fmt.Fprintf(box, "cryptonote.social\n")
 	fmt.Fprintf(box, "Name: %s\n", user.Name)
@@ -33,7 +33,7 @@ func MakeCryptonoteBox(user *cryptonote.User) *tm.Box {
 }
 
 func MakeTwominersBox(user *twominers.User) *tm.Box {
-	box := tm.NewBox(25|tm.PCT, 10, 0)
+	box := tm.NewBox(40|tm.PCT, 10, 0)
 
 	fmt.Fprintf(box, "2miners.com\n")
 	fmt.Fprintf(box, "Current Hash: %s/s\n", hashRounder(user.HashRate))

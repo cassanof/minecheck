@@ -8,6 +8,8 @@ import (
 	"github.com/elleven11/minecheck/twominers"
 )
 
+const DIV_FACTOR = 1000000000
+
 func DrawBoxes(boxes []*tm.Box) {
 	tm.Clear()
 
@@ -38,7 +40,8 @@ func MakeTwominersBox(user *twominers.User) *tm.Box {
 	fmt.Fprintf(box, "2miners.com\n")
 	fmt.Fprintf(box, "Current Hash: %s/s\n", hashRounder(user.HashRate))
 	fmt.Fprintf(box, "Average Hash: %s/s\n", hashRounder(user.AvgHashRate))
-	fmt.Fprintf(box, "Paid: %.6f NANO\n", user.Paid)
+	fmt.Fprintf(box, "Unpaid: %.6f ETH\n", float64(user.Stats.Balance)/DIV_FACTOR)
+	fmt.Fprintf(box, "Paid: %.6f ETH\n", float64(user.Stats.Paid)/DIV_FACTOR)
 	fmt.Fprintf(box, "Workers On: %d\n", user.WorkerOn)
 	fmt.Fprintf(box, "Shares Validated: %d\n", user.SharesValid)
 

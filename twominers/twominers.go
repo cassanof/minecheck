@@ -10,14 +10,18 @@ import (
 
 type User struct {
 	Wallet        string
-	HashRate      int     `json:"currentHashrate"`
-	AvgHashRate   int     `json:"hashrate"`
-	Paid          float64 `json:"paymentsTotal"`
-	SharesValid   int     `json:"sharesValid"`
-	SharesInvalid int     `json:"sharesInvalid"`
-	SharesStale   int     `json:"sharesStale"`
-	WorkerOn      int     `json:"workersOnline"`
-	WorkerOff     int     `json:"workersOffline"`
+	HashRate      int `json:"currentHashrate"`
+	AvgHashRate   int `json:"hashrate"`
+	SharesValid   int `json:"sharesValid"`
+	SharesInvalid int `json:"sharesInvalid"`
+	SharesStale   int `json:"sharesStale"`
+	WorkerOn      int `json:"workersOnline"`
+	WorkerOff     int `json:"workersOffline"`
+	PaymentsTotal int `json:"paymentsTotal"`
+	Stats         struct {
+		Balance int `json:"balance"`
+		Paid    int `json:"paid"`
+	} `json:"stats"`
 }
 
 func GetStats(wallet string) (*User, error) {
@@ -53,6 +57,9 @@ func GetStats(wallet string) (*User, error) {
 	}
 
 	user.Wallet = wallet
+
+	json, err := json.MarshalIndent(user, "", " ")
+	fmt.Println(string(json))
 
 	return &user, nil
 }

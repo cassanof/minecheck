@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	cn, err := cryptonote.GetStats("put username here") // username goes here
-	twm, err := twominers.GetStats("put wallet here")
+	cn, err := cryptonote.GetStats("put username") // username goes here
+	twm, err := twominers.GetStats("put wallet")     // wallet goes here
 	if err != nil {
 		panic(err)
 	}
